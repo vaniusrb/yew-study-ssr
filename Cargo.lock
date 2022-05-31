@@ -1903,7 +1903,7 @@ dependencies = [
 [[package]]
 name = "yew"
 version = "0.19.3"
-source = "git+https://github.com/yewstack/yew/#7dc7195da8521bdcb91b4fef054c35898c136831"
+source = "git+https://github.com/yewstack/yew/#cb5a609e0897d3c79a07aa2f5c2b377a8e54c12a"
 dependencies = [
  "base64ct",
  "bincode",
@@ -1927,7 +1927,7 @@ dependencies = [
 [[package]]
 name = "yew-macro"
 version = "0.19.3"
-source = "git+https://github.com/yewstack/yew/#7dc7195da8521bdcb91b4fef054c35898c136831"
+source = "git+https://github.com/yewstack/yew/#cb5a609e0897d3c79a07aa2f5c2b377a8e54c12a"
 dependencies = [
  "boolinator",
  "lazy_static",
