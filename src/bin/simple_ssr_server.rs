@@ -9,7 +9,8 @@ use axum::routing::get;
 use axum::{Extension, Router, Server};
 use clap::Parser;
 use once_cell::sync::Lazy;
-use simple_ssr::app_api::AppApi;
+use simple_ssr::app_api::ServerApp;
+use simple_ssr::app_api::ServerAppProps;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use tokio_util::task::LocalPoolHandle;
@@ -32,18 +33,16 @@ async fn render(
     url: Request<Body>,
     Query(queries): Query<HashMap<String, String>>,
 ) -> Html<String> {
-    // let url = url.uri().to_string();
+    let url = url.uri().to_string();
 
     let content = LOCAL_POOL
         .spawn_pinned(move || async move {
-            // let server_app_props = ServerAppProps {
-            //     url: url.into(),
-            //     queries,
-            // };
+            let server_app_props = ServerAppProps {
+                url: url.into(),
+                queries,
+            };
 
-            let renderer = yew::ServerRenderer::<AppApi>::new();
-
-            // ::with_props(server_app_props);
+            let renderer = yew::ServerRenderer::<ServerApp>::with_props(server_app_props);
 
             renderer.render().await
         })
