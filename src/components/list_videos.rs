@@ -1,8 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use yew::prelude::*;
-use yew_router::history::{AnyHistory, History, MemoryHistory};
-use yew_router::prelude::*;
 
 #[derive(Clone, PartialEq, Deserialize, Serialize)]
 struct Video {
@@ -46,7 +43,7 @@ struct VideosDetailsProps {
 fn video_details(VideosDetailsProps { video }: &VideosDetailsProps) -> Html {
     html! {
         <div>
-            <h3>{ video.title.clone() }</h3>
+            <h3>{ &video.title }</h3>
             <img src="https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder" alt="video thumbnail" />
         </div>
     }
@@ -54,9 +51,17 @@ fn video_details(VideosDetailsProps { video }: &VideosDetailsProps) -> Html {
 
 #[cfg(feature = "ssr")]
 async fn fetched_videos() -> Vec<Video> {
-    let resp = reqwest::get("https://yew.rs/tutorial/data.json")
-        .await
-        .unwrap();
+    let resp = match reqwest::get("https://yew.rs/tutorial/data.json").await {
+        Ok(r) => r,
+        Err(_) => {
+            return vec![Video {
+                id: 1,
+                title: "xxx".into(),
+                speaker: "xxx".into(),
+                url: "xxx".into(),
+            }]
+        }
+    };
     resp.json().await.unwrap()
 }
 
@@ -90,46 +95,16 @@ pub fn videos_container() -> HtmlResult {
     })
 }
 
-#[function_component(WasmApp)]
-pub fn wasm_app() -> Html {
-    html! {
-        <BrowserRouter>
-            <main>
-                <MainApp/>
-            </main>
-        </BrowserRouter>
-    }
-}
-
-#[derive(Properties, PartialEq, Debug)]
-pub struct ServerAppProps {
-    pub url: AttrValue,
-    pub queries: HashMap<String, String>,
-}
-
-#[function_component(ServerApp)]
-pub fn server_app(props: &ServerAppProps) -> Html {
-    let history = AnyHistory::from(MemoryHistory::new());
-    history
-        .push_with_query(&*props.url, &props.queries)
-        .unwrap();
-    html! {
-        <Router history={history}>
-            <main>
-                <MainApp/>
-            </main>
-        </Router>
-    }
-}
-
-#[function_component(MainApp)]
-pub fn main_app() -> Html {
+#[function_component(VideosPage)]
+pub fn videos_page() -> Html {
     let fallback = html! {<div>{"Loading..."}</div>};
     // <Switch<Route> render={switch} />
 
     html! {
-        <Suspense {fallback}>
-            <VideosContainer />
-        </Suspense>
+        <div>
+            <Suspense {fallback}>
+                <VideosContainer />
+            </Suspense>
+        </div>
     }
 }

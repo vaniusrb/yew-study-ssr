@@ -1,4 +1,4 @@
-use simple_ssr::app_api::WasmApp;
+use simple_ssr::app::WasmApp;
 
 fn main() {
     #[cfg(target_arch = "wasm32")]

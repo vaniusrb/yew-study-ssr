@@ -1,19 +1,27 @@
-
-
-# Server-side Rendering Example
+# Yew Server-side Rendering Study
 
 This example demonstrates server-side rendering.
 
+Based in yew's tutorial and simple_ssr example.
+
+Main features:
+* Axum server
+*
+
 # How to run this example
 
-1. build hydration bundle
+Run the script
 
-`trunk build examples/simple_ssr/index.html`
+`./script/run.sh`
 
-2. Run the server
-
-`cargo run --features=ssr --bin simple_ssr_server -- --dir examples/simple_ssr/dist`
-
-3. Open Browser
+Open Browser
 
 Navigate to http://localhost:8080/ to view results.
+
+# Todo
+
+[ ] Add Routes
+[ ] State and events between components
+[ ] Global state
+[ ] Add Bulma CSS
+
