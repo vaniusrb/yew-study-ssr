@@ -4,18 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+log = "0.4"
 yew = { git = "https://github.com/yewstack/yew/" }
 yew-router = { git = "https://github.com/yewstack/yew/" }
-
 reqwest = { version = "0.11.8", features = ["json"] }
 serde = { version = "1.0.132", features = ["derive"] }
-uuid = { version = "1.0.0", features = ["serde"] }
-
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-reqwasm = "0.5"
-wasm-bindgen-futures = "0.4"
-wasm-logger = "0.2"
-log = "0.4"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 axum = "0.5"

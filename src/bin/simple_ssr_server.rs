@@ -63,8 +63,6 @@ struct IndexContent(String);
 
 #[tokio::main]
 async fn main() {
-    // env_logger::init();
-
     let opts = Opt::parse();
 
     let index_html_s = tokio::fs::read_to_string(opts.dir.join("index.html"))
@@ -83,8 +81,7 @@ async fn main() {
     let app = Router::new()
         .route("/api/test", get(|| async move { "Hello World" }))
         // needed because https://github.com/tower-rs/tower-http/issues/262
-        .route("/", get(render))
-        .layer(Extension(index_content.clone()))
+        .route("/", get(render).layer(Extension(index_content.clone())))
         .fallback(HandleError::new(
             ServeDir::new(opts.dir)
                 .append_index_html_on_directories(false)
