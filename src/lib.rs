@@ -1,4 +1,6 @@
-pub mod app_api;
+pub mod app;
+pub mod routes;
+pub mod components;
 
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
