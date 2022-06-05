@@ -11,12 +11,15 @@ pub struct ServerAppProps {
     pub queries: HashMap<String, String>,
 }
 
-#[function_component(ServerApp)]
-pub fn server_app(props: &ServerAppProps) -> Html {
+#[function_component]
+pub fn ServerApp(props: &ServerAppProps) -> Html {
     let history = AnyHistory::from(MemoryHistory::new());
-    history
-        .push_with_query(&*props.url, &props.queries)
-        .unwrap();
+    println!("{} {:?}", &*props.url, &props.queries);
+    if !props.url.is_empty() {
+        history
+            .push_with_query(&*props.url, &props.queries)
+            .unwrap();
+    };
     html! {
         <Router history={history}>
             <main>
@@ -26,8 +29,8 @@ pub fn server_app(props: &ServerAppProps) -> Html {
     }
 }
 
-#[function_component(WasmApp)]
-pub fn wasm_app() -> Html {
+#[function_component]
+pub fn App() -> Html {
     html! {
         <BrowserRouter>
             <main>
@@ -37,34 +40,27 @@ pub fn wasm_app() -> Html {
     }
 }
 
-#[function_component(MainApp)]
-fn main_app() -> Html {
+#[function_component]
+fn MainApp() -> Html {
     html! {
-        <div>
-            <RouteApp/ >
-        </div>
+        <RouteApp/ >
     }
 }
 
 #[function_component(VideosApp)]
 fn videos_app() -> Html {
     html! {
-
-            <main>
-                <VideosPage/ >
-            </main>
-
+        <main>
+            <VideosPage/ >
+        </main>
     }
 }
 
 #[function_component(RouteApp)]
 fn route_app() -> Html {
     html! {
-
-            // <Header/ >
-            <main>
-                <Switch<AppRoute> render={switch} />
-            </main>
-
+        <main>
+            <Switch<AppRoute> render={switch} />
+        </main>
     }
 }

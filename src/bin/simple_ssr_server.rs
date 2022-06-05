@@ -63,8 +63,6 @@ struct IndexContent(String);
 
 #[tokio::main]
 async fn main() {
-    // env_logger::init();
-
     let opts = Opt::parse();
 
     let index_html_s = tokio::fs::read_to_string(opts.dir.join("index.html"))

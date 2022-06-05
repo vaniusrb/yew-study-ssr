@@ -21,5 +21,6 @@ pub fn switch(routes: AppRoute) -> Html {
         AppRoute::Login => html! { <Login /> },
         AppRoute::Register => html! { <Register /> },
         AppRoute::Home => html! { <Home /> },
+        // AppRoute::Home => html! { "Home" },
     }
 }
